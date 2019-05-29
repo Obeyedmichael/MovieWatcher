@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">MovieWatcher</string>
+    <string name="pageforward">&gt;</string>
+    <string name="pageback">&lt;</string>
+    <string name="Search">Search</string>
+    <string name="action_settings"></string>
+</resources>

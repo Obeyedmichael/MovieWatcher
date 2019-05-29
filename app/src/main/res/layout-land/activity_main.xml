@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:padding="20sp">
+
+    <LinearLayout
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+    <Button
+        app:layout_constraintLeft_toLeftOf="@id/RecyclerView"
+        app:layout_constraintRight_toRightOf="parent"
+        android:id="@+id/pageminus"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:text="@string/pageback" />
+
+    <android.support.v7.widget.RecyclerView
+        app:layout_constraintLeft_toLeftOf="@id/pageplus"
+        app:layout_constraintRight_toRightOf="@id/pageminus"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/RecyclerView">
+
+    </android.support.v7.widget.RecyclerView>
+
+        <Button
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="@id/RecyclerView"
+            android:id="@+id/pageplus"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="@string/pageforward" />
+</LinearLayout>
+
+</android.support.constraint.ConstraintLayout>
