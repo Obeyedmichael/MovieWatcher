@@ -20,13 +20,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     private static final String TAG = "RecyclerViewAdapter";
 
-    private ArrayList<String> mPoster = new ArrayList<>();
-    private ArrayList<String> mTitle = new ArrayList<>();
+    Movies movie;
+    private ArrayList<Movies> movies = new ArrayList<>();
     private Context mContext;
 
-    public RecyclerViewAdapter(ArrayList<String> mPoster, ArrayList<String> mTitle, Context mContext) {
-        this.mPoster = mPoster;
-        this.mTitle = mTitle;
+    public RecyclerViewAdapter(ArrayList<Movies> movies, Context mContext) {
+        this.movies = movies;
         this.mContext = mContext;
     }
 
@@ -42,23 +41,23 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         Log.d(TAG, "onBindViewHolder: called");
         Glide.with(mContext)
-                .load(mPoster.get(position))
+                .load(movies.get(position).getPoster())
                 .into(holder.poster);
-        holder.movie_title.setText(mTitle.get(position));
+        holder.movie_title.setText(movies.get(position).getTitle());
 
         holder.parent_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG, "onClick: clicked on: " + mTitle.get(position));
+                Log.d(TAG, "onClick: clicked on: " + movies.get(position));
 
-                Toast.makeText(mContext, mTitle.get(position), Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, movies.get(position).getTitle(), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return mTitle.size();
+        return movies.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{

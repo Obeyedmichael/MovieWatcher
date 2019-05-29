@@ -2,7 +2,11 @@ package com.example.moviewatcher;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,11 +23,13 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+
+    private static final String TAG = "MainActivity";
 
     // Api info
     final String apiKey = "81e7df02";
-    private String page="";
+    private String page="1";
 
     //Movie Object
     Movies movie;
@@ -38,6 +44,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Button buttonforward = findViewById(R.id.pageplus);
+        Button buttonback = findViewById(R.id.pageminus);
+
+        buttonforward.setOnClickListener(this);
+        buttonback.setOnClickListener(this);
 
 
         OkHttpClient Client = new OkHttpClient();
@@ -84,24 +96,61 @@ public class MainActivity extends AppCompatActivity {
                                     movie.setYearOfRelease(c.getString("Year"));
                                     movie.setType(c.getString("Type"));
                                     movie.setPoster(c.getString("Poster"));
-                                    //du skal skrive movie objektet i log.d
-                                    Log.d("debug", movie.getTitle());
-                                    //mTextViewResult.append(movie.getimdbId() + movie.getTitle() + movie.getYearOfRelease() + movie.getType() + movie.getPoster());
 
+                                    Log.d("debug", movie.getTitle());
+                                    Log.d("debug", movie.getType());
+                                    initRecyclerView();
                                 }
+
+
                             }
                             catch (JSONException exception)
                             {
                                 Log.d("Debug" , "ERROR"); exception.printStackTrace();
                             }
-
                            // mTextViewResult.setText(myResponse);
                         }
+
+
                     });
                 }
-
-
             }
         });
+
+
     }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.pageplus:
+                page="2";
+                Log.d(TAG, page);
+                Toast.makeText(this, page, Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.pageminus:
+                Toast.makeText(this, "Button 2 clicked", Toast.LENGTH_SHORT).show();
+                break;
+
+        }
+    }
+
+
+    private void initRecyclerView(){
+        Log.d(TAG, "initRecyclerView: init recyclerview");
+        RecyclerView recyclerView =findViewById(R.id.RecyclerView);
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(movies,this);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    public String getPage() {
+        return page;
+    }
+
+    public void setPage(String page) {
+        this.page = page;
+    }
+
+
 }

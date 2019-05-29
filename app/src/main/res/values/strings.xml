@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">MovieWatcher</string>
+    <string name="pageforward">Next Page</string>
+    <string name="pageback">Previous Page</string>
 </resources>
