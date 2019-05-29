@@ -4,8 +4,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -50,7 +54,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         Button buttonforward = findViewById(R.id.pageplus);
         Button buttonback = findViewById(R.id.pageminus);
-        
 
         buttonforward.setOnClickListener(this);
         buttonback.setOnClickListener(this);
@@ -140,11 +143,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.pageplus:
                 setPage(page+1);
 
+                adapter.removeMovie(movie);
+
                 okhhtprequest(Search, page);
 
                 Toast.makeText(this, "next page", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.pageminus:
+                if (page>1){
+                    setPage(page-1);
+
+                    adapter.removeMovie(movie);
+
+                    okhhtprequest(Search, page);
+                }
+
+                else setPage(1);
+
                 Toast.makeText(this, "previous page", Toast.LENGTH_SHORT).show();
                 break;
 
@@ -175,7 +190,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
-
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
 
 
 }

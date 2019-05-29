@@ -2,4 +2,6 @@
     <string name="app_name">MovieWatcher</string>
     <string name="pageforward">Next Page</string>
     <string name="pageback">Previous Page</string>
+    <string name="Search">Search</string>
+    <string name="action_settings"></string>
 </resources>

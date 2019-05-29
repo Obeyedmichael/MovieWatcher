@@ -29,9 +29,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         this.mContext = mContext;
     }
 
-    public void addMovie(Movies e) {
+    public void removeMovie(Movies e) {
         movies.removeAll(movies);
         Log.d("debug", "addMovie: all removed");
+    }
+
+    public void addMovie(Movies e) {
         movies.add(e);
         Log.d("debug", "addMovie: added");
     }
