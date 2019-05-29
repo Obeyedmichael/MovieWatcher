@@ -26,6 +26,7 @@ import okhttp3.Response;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = "MainActivity";
+    RecyclerViewAdapter adapter;
 
     // Api info
     final String apiKey = "81e7df02";
@@ -51,6 +52,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         buttonforward.setOnClickListener(this);
         buttonback.setOnClickListener(this);
 
+        initRecyclerView();
 
         OkHttpClient Client = new OkHttpClient();
 
@@ -90,8 +92,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 {
                                     Movies movie = new Movies("","","","","");
                                     JSONObject c = movies.getJSONObject(i);
-                                    movie.setimdbId(c.getString("imdbID"));
 
+                                    movie.setimdbId(c.getString("imdbID"));
                                     movie.setTitle(c.getString("Title"));
                                     movie.setYearOfRelease(c.getString("Year"));
                                     movie.setType(c.getString("Type"));
@@ -99,7 +101,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                                     Log.d("debug", movie.getTitle());
                                     Log.d("debug", movie.getType());
-                                    initRecyclerView();
+                                    adapter.addMovie(movie);
+                                 //   adapter.
+                                    adapter.notifyDataSetChanged();
+                                    //adapter.notifyItemInserted(adapter.getItemCount());
+
                                 }
 
 
@@ -139,7 +145,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void initRecyclerView(){
         Log.d(TAG, "initRecyclerView: init recyclerview");
         RecyclerView recyclerView =findViewById(R.id.RecyclerView);
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(movies,this);
+        adapter = new RecyclerViewAdapter(movies,this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
