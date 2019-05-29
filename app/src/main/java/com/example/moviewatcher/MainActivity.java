@@ -30,7 +30,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     // Api info
     final String apiKey = "81e7df02";
-    private String page="1";
+    private int page = 1;
+    private String Search = "ghost";
+
 
     //Movie Object
     Movies movie;
@@ -48,15 +50,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         Button buttonforward = findViewById(R.id.pageplus);
         Button buttonback = findViewById(R.id.pageminus);
+        
 
         buttonforward.setOnClickListener(this);
         buttonback.setOnClickListener(this);
 
         initRecyclerView();
 
+
+        okhhtprequest("ghost",page);
+
+
+    }
+
+    public void okhhtprequest(String search, int page){
         OkHttpClient Client = new OkHttpClient();
 
-        String url="http://www.omdbapi.com/?apikey="+apiKey+"&s=avengers&page="+page;
+        String url="http://www.omdbapi.com/?apikey="+apiKey+"&s="+search+"&page="+page;
         //String url="http://www.omdbapi.com/?apikey=81e7df02&i=tt4924706";
 
         Request request = new Request.Builder()
@@ -102,7 +112,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                     Log.d("debug", movie.getTitle());
                                     Log.d("debug", movie.getType());
                                     adapter.addMovie(movie);
-                                 //   adapter.
+                                    //   adapter.
                                     adapter.notifyDataSetChanged();
                                     //adapter.notifyItemInserted(adapter.getItemCount());
 
@@ -114,7 +124,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             {
                                 Log.d("Debug" , "ERROR"); exception.printStackTrace();
                             }
-                           // mTextViewResult.setText(myResponse);
+                            // mTextViewResult.setText(myResponse);
                         }
 
 
@@ -122,41 +132,50 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
             }
         });
-
-
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.pageplus:
-                page="2";
-                Log.d(TAG, page);
-                Toast.makeText(this, page, Toast.LENGTH_SHORT).show();
+                setPage(page+1);
+
+                okhhtprequest(Search, page);
+
+                Toast.makeText(this, "next page", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.pageminus:
-                Toast.makeText(this, "Button 2 clicked", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "previous page", Toast.LENGTH_SHORT).show();
                 break;
 
         }
     }
 
+    public int getPage() {
+        return page;
+    }
+
+    public void setPage(int page) {
+        this.page = page;
+    }
+
+    public String getSearch() {
+        return Search;
+    }
+
+    public void setSearch(String search) {
+        Search = search;
+    }
 
     private void initRecyclerView(){
-        Log.d(TAG, "initRecyclerView: init recyclerview");
+        Log.d("debug" , "initRecyclerView: init recyclerview");
         RecyclerView recyclerView =findViewById(R.id.RecyclerView);
         adapter = new RecyclerViewAdapter(movies,this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
-    public String getPage() {
-        return page;
-    }
 
-    public void setPage(String page) {
-        this.page = page;
-    }
 
 
 }

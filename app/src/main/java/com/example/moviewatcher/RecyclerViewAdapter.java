@@ -20,13 +20,20 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     private static final String TAG = "RecyclerViewAdapter";
 
-    Movies movie;
-    private ArrayList<Movies> movies = new ArrayList<>();
+   // Movies movie;
+    private ArrayList<Movies> movies;
     private Context mContext;
 
     public RecyclerViewAdapter(ArrayList<Movies> movies, Context mContext) {
         this.movies = movies;
         this.mContext = mContext;
+    }
+
+    public void addMovie(Movies e) {
+        movies.removeAll(movies);
+        Log.d("debug", "addMovie: all removed");
+        movies.add(e);
+        Log.d("debug", "addMovie: added");
     }
 
     @NonNull
@@ -39,7 +46,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
-        Log.d(TAG, "onBindViewHolder: called");
+        Log.d("debug", "onBindViewHolder: called");
         Glide.with(mContext)
                 .load(movies.get(position).getPoster())
                 .into(holder.poster);
@@ -48,7 +55,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.parent_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG, "onClick: clicked on: " + movies.get(position));
+                Log.d("debug", "onClick: clicked on: " + movies.get(position));
 
                 Toast.makeText(mContext, movies.get(position).getTitle(), Toast.LENGTH_SHORT).show();
             }
